@@ -1,0 +1,88 @@
+#!/bin/bash
+
+PREFIX="/home/$(whoami)/.local"
+
+# Help message function
+show_help() {
+  echo "Installer for fracture_forge application"
+  echo "Usage: ./configure [OPTIONS]"
+  echo ""
+  echo "Options:"
+  echo "  --prefix=PREFIX  Set the installation prefix (default: $PREFIX)"
+  echo "  --python=PYTHON  Set the path to python executable"
+  echo "  --help, -h       Display this help message"
+  echo ""
+  
+
+  exit 0
+}
+
+
+# Parse arguments
+while [[ "$#" -gt 0 ]]; do
+    case $1 in
+        --prefix=*) PREFIX="${1#*=}";;
+        --python=*) PYTHON_PATH="${1#*=}";;
+        --help|-h) show_help;;
+        *) echo "Unknown parameter passed: $1"; show_help;;
+    esac
+    shift
+done
+
+if [[ -n "$SUDO_USER" ]]; then
+    USER_HOME=$(eval echo "~$SUDO_USER")
+else
+    USER_HOME="$HOME"
+fi
+
+BINPATH="${PREFIX/#\~/$USER_HOME}/bin"
+LIBPATH="${PREFIX/#\~/$USER_HOME}/lib/fracture_forge"
+
+if [[ -z "$PYTHON_PATH" ]]; then
+    PYTHON_PATH=$(which python3)
+    if [[ -z "$PYTHON_PATH" ]]; then
+        echo "Error: python3 not found in PATH and --python_path not specified."
+        exit 1
+    fi
+fi
+
+echo "Installing Python dependencies using $PYTHON_PATH..."
+
+if [ ! -f requirements.txt ]; then
+    echo "Error: requirements.txt not found in the current directory. Installation cannot be completed."
+    exit 1
+fi
+
+"$PYTHON_PATH" -m pip install -r requirements.txt
+
+mkdir -p "$BINPATH"
+mkdir -p "$LIBPATH"
+
+if [ ! -f forge.py ]; then
+    echo "Error: forge.py not found in the current directory. Installation cannot be completed."
+    exit 1
+fi
+
+if [ ! -f core_classes.py ]; then
+    echo "Error: core_classes.py not found in the current directory. Installation cannot be completed."
+    exit 1
+fi
+
+if [ ! -f support_classes.py ]; then
+    echo "Error: support_classes.py not found in the current directory. Installation cannot be completed."
+    exit 1
+fi
+
+echo "#!$PYTHON_PATH" > "$BINPATH/fforge"
+echo "import os, sys" >> "$BINPATH/fforge"
+echo "libdir = os.path.join(os.path.dirname(__file__), '..', 'lib', 'fracture_forge')" >> "$BINPATH/fforge"
+echo "sys.path.append(os.path.abspath(libdir))" >> "$BINPATH/fforge"
+cat forge.py >> "$BINPATH/fforge"
+
+chmod 755 "$BINPATH/fforge"
+
+cp core_classes.py "$LIBPATH"
+cp support_classes.py "$LIBPATH"
+
+echo "Installation complete."
+echo "Path to installed executable: $BINPATH/fforge"
