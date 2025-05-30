@@ -68,21 +68,21 @@ mkdir build && cd build
 
 cmake ../cmake \
   -D BUILD_MPI=on \
-    -D BUILD_OMP=on \
-      -D BUILD_LIB=on \
-        -D BUILD_SHARED_LIBS=on \
-          -D PKG_GHOSTWALL=on \
-            -D CMAKE_INSTALL_PREFIX=/your/installation/path
+  -D BUILD_OMP=on \
+  -D BUILD_LIB=on \
+  -D BUILD_SHARED_LIBS=on \
+  -D PKG_GHOSTWALL=on \
+  -D CMAKE_INSTALL_PREFIX=/your/installation/path
 
-            cmake --build . -j $(nproc)
+cmake --build . -j $(nproc)
 
-            make install-python
-            make install
-            ```
+make install-python
+make install
+```
 
-            📚 Official guide: [https://docs.lammps.org/Build\_cmake.html](https://docs.lammps.org/Build_cmake.html)
+📚 Official guide: [https://docs.lammps.org/Build\_cmake.html](https://docs.lammps.org/Build_cmake.html)
 
-            ---
+---
 
 ### ⚠️ Python Compatibility Notice
 
@@ -132,10 +132,10 @@ mpirun -np 4 fforge -s STRUCTURE -f FORCEFIELD -u real -r 1.5 -e 0.1 -t 300 -v 3
 * Printed values:
 
   * Surface area of the crack
-    * Total energy released
-      * Energy release rate `G` (J/m²)
+  * Total energy released
+  * Energy release rate `G` (J/m²)
 
-      ---
+---
 
 ## 📄 Publication
 
