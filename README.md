@@ -136,14 +136,3 @@ mpirun -np 4 fforge -s STRUCTURE -f FORCEFIELD -u real -r 1.5 -e 0.1 -t 300 -v 3
   * Energy release rate `G` (J/m²)
 
 ---
-
-## 📄 Publication
-
-A scientific publication describing Fracture Forge is currently in preparation and will be linked here when available.
-
----
-
-## 📝 License
-
-This project is released under an open-source license. See `LICENSE` for details.
-
