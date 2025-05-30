@@ -77,7 +77,7 @@ echo "#!$PYTHON_PATH" > "$BINPATH/fforge"
 echo "import os, sys" >> "$BINPATH/fforge"
 echo "libdir = os.path.join(os.path.dirname(__file__), '..', 'lib', 'fracture_forge')" >> "$BINPATH/fforge"
 echo "sys.path.append(os.path.abspath(libdir))" >> "$BINPATH/fforge"
-cat forge.py >> "$BINPATH/fforge"
+cat fforge.py >> "$BINPATH/fforge"
 
 chmod 755 "$BINPATH/fforge"
 
