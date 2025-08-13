@@ -58,8 +58,8 @@ fi
 mkdir -p "$BINPATH"
 mkdir -p "$LIBPATH"
 
-if [ ! -f forge.py ]; then
-    echo "Error: forge.py not found in the current directory. Installation cannot be completed."
+if [ ! -f fforge.py ]; then
+    echo "Error: fforge.py not found in the current directory. Installation cannot be completed."
     exit 1
 fi
 

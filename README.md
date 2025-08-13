@@ -10,6 +10,9 @@ The result is a fracture path that reflects the underlying material structure an
 
 Fracture Forge includes an installation script to set up the application and dependencies. It also requires a specially compiled version of LAMMPS.
 
+Fracture forge depends on an MPI installation (through mpi4py), so one should have it available.
+It is also advised to perform the whole installation process in a separate virtual environment to avoid any python module conflicts.
+
 ---
 
 ### 1. Clone this Repository
@@ -64,6 +67,7 @@ Fracture Forge depends on a custom version of LAMMPS with the `GHOSTWALL` packag
 ```bash
 git clone https://github.com/superde1fin/lammps.git
 cd lammps
+git checkout ghostwall
 mkdir build && cd build
 
 cmake ../cmake \
